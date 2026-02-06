@@ -10,8 +10,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && chmod +x dist/index.js",
-    "dev": "tsc -w"
+    "build": "tsup src/index.ts --format esm --dts --out-dir dist --clean && chmod +x dist/index.js",
+    "dev": "tsc -w",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Clodoaldo Neto",
@@ -19,9 +20,13 @@
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@types/pluralize": "^0.0.33",
+    "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "pluralize": "^8.0.0"
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0",
+    "pluralize": "^8.0.0",
+    "ts-jest": "^29.4.6"
   }
 }
