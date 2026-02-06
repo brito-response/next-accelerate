@@ -20,6 +20,7 @@
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@types/pluralize": "^0.0.33",
+    "ts-node": "^10.9.2",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },

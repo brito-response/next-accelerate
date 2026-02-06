@@ -12,7 +12,8 @@ const config: Config = {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  coverageProvider: 'v8'
+  coverageProvider: 'v8',
+  coverageReporters: ['lcov', 'text'],
 };
 
 export default config;
