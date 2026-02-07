@@ -1,6 +1,15 @@
-# ⚡ Next Accelerate
+# Next-accelerate
 
-**Next-accelerate** is a command-line tool (CLI) that automates repetitive tasks during the development of Next.js projects, already implementing part of the architecture with ready-to-use templates, provided that:
+*Next-accelerate* is a command-line tool (CLI) that automates repetitive tasks during the development of Next.js projects, already implementing part of the architecture with ready-to-use templates
+
+![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=alert_status)
+![Bugs](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=bugs)
+![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=code_smells)
+![Coverage](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=coverage)
+![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=duplicated_lines_density)
+![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=security_rating)
+![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=sqale_index)
+![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=brito-response_next-accelerate&metric=vulnerabilities)
 
 ## Requirements
 
@@ -12,20 +21,30 @@
 You can run the CLI **without installing anything globally** using `npx`:
 
 ```bash
-npx next-accelerate singular_resource_name
+npx next-accelerate create singular_resource_name
 
 ```
 
 Or install globally:
 
 ```bash
-npm install -g next-accelerate
+npm install -g next-accelerate && next-accelerate create singular_resource_name
 
 ```
 
 ### For now, the CLI only offers the following features
 
-1. Create default folders for resources.
+- Create default folders for resources.
+
+```bash
+npx next-accelerate create ingular_resource_name
+```
+
+- Create forms resouces folders for resources.
+
+```bash
+npx next-accelerate create:form ingular_resource_name
+```
 
 At the end, you can run:
 
@@ -56,16 +75,20 @@ src/
 
 ## 🧠 Why use it?
 
-* ⏱️ Saves setup time
-* 📐 Maintains consistency across projects
-* 🧹 Avoids repetitive boilerplate code
-* 🔁 Ideal for freelancers, squads, and studies
+- ⏱️ Saves setup time
+
+- 📐 Maintains consistency across projects
+
+- 🧹 Avoids repetitive boilerplate code
+- 🔁 Ideal for freelancers, squads, and studies
 
 ## 🛠 Technologies
 
-* Node.js
-* Next.js
-* TypeScript
+- Node.js
+
+- Next.js
+
+- TypeScript
 
 ---
 

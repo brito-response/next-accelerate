@@ -1,7 +1,7 @@
 import { NextResourceBuilder } from "../builders/resource-builder";
 import { nextProjectGuardSimple } from "../utils/guards";
 
-export function createResource(inputName?: string) {
+export function createFormForResource(inputName?: string) {
   nextProjectGuardSimple();
 
   if (!inputName) {
@@ -10,6 +10,6 @@ export function createResource(inputName?: string) {
   }
 
   const builder = new NextResourceBuilder(inputName);
-  builder.setBasePath().createListPage().createDetailPage().createNewPage().build();
-  console.log(`Recurso "${inputName}" criado \x1b[32m✔ Sucesso\x1b[0m`);
+  builder.setBasePathForForm().createCrudForm().build();
+  console.log(`Form para o recurso "${inputName}" criado \x1b[32m✔ Sucesso\x1b[0m`);
 }

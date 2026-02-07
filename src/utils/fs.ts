@@ -11,3 +11,7 @@ export const createFile = (filePath: string, content: string) => {
     fs.writeFileSync(filePath, content.trimStart());
   }
 };
+
+export function pathExists(p: string) {
+  return fs.existsSync(p);
+};
