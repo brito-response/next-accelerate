@@ -1,0 +1,33 @@
+{
+  "name": "next-accelerate",
+  "version": "0.2.1",
+  "description": "cli to speed up feature creation in Next.js",
+  "bin": {
+    "next-accelerate": "dist/index.js"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --out-dir dist --clean && chmod +x dist/index.js",
+    "dev": "tsc -w",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Clodoaldo Neto",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/pluralize": "^0.0.33",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0",
+    "pluralize": "^8.0.0",
+    "ts-jest": "^29.4.6"
+  }
+}

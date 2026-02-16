@@ -1,0 +1,46 @@
+export const newPageTemplate = (resourceInSingular: string,resourceInPlural: string) => `
+  import { FilePlus2, Info } from "lucide-react";
+  import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+  import { Session } from "@/utils/session";
+  import { getServerSession } from "next-auth";
+  import { redirect } from "next/navigation";
+  import { FormNewPost } from "@/forms/${resourceInPlural.toLocaleLowerCase()}";
+
+  export default async function New${resourceInSingular}Page() {
+    const session: Session | null = await getServerSession(authOptions);
+    if (!session) redirect("/");
+
+    return (
+      <div className="w-full min-h-screen bg-[--bg-section-100] transition-colors duration-500">
+        <div className="max-w-4xl mx-auto px-6 py-12">
+          <header className="mb-10">
+            <div className="flex items-start gap-4">
+              <div className="p-3 rounded-2xl bg-primary/10 text-primary">
+                <FilePlus2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-semibold">Criar novo post</h1>
+                <p className="mt-1 text-muted-foreground max-w-2xl">
+                  Preencha as informações abaixo para publicar um novo post no blog.
+                  Capriche no título e no conteúdo para melhorar a leitura e o
+                  engajamento.
+                </p>
+              </div>
+            </div>
+          </header>
+
+          {/* Info helper */}
+          <section className="mb-12 rounded-2xl bg-background shadow-sm p-6 flex gap-3">
+            <Info className="w-5 h-5 text-muted-foreground mt-0.5" />
+            <p className="text-sm text-muted-foreground">
+              Você pode editar este ${resourceInSingular.toLowerCase()} depois de publicado. Certifique-se de revisar
+              o conteúdo antes de salvar.
+            </p>
+          </section>
+
+          <FormNew${resourceInSingular} />
+        </div>
+      </div>
+    );
+  }
+`;
