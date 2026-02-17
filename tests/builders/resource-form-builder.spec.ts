@@ -2,8 +2,8 @@ import * as fsUtils from "../../src/utils/fs";
 import * as gitUtils from "../../src/utils/services/git.service";
 import { NextResourceBuilder } from "../../src/builders/resource-builder";
 
-jest.mock("../../src/utils/services/install-dependences.service", () => ({
-    DependencyInstaller: {
+jest.mock("../../src/utils/services/install-dependences-form.service", () => ({
+    DependencyFormInstaller: {
         getInstance: jest.fn().mockReturnValue({
             install: jest.fn().mockResolvedValue(undefined),
         }),
@@ -116,3 +116,4 @@ describe("NextResourceBuilder", () => {
         expect(gitUtils.gitCommit).not.toHaveBeenCalled();
     });
 });
+

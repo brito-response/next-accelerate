@@ -12,7 +12,6 @@ export { inputTemplate } from "./inputs/input-template";
 export { nextConfigTemplate } from "./routes/nextauth-route";
 export { nextDecodeClaimsTemplate } from "./config/decode-claims";
 export { nextRequestApiTemplate } from "./config/request-api";
-export { nextSignOutTemplate } from "./config/singout";
 export { nextSessionTypeTemplate } from "./config/session";
 export { environmentTemplate } from "./config/environment";
 export { formForgotTemplate } from "./forms/forgot-form";

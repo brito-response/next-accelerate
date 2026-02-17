@@ -2,19 +2,18 @@ import path from "node:path";
 import { BuilderOptions } from "../utils/contracts/build-options";
 import { gitCommit } from "../utils/services/git.service";
 import { createDir, createFile, moveFile, pathExists } from "../utils/fs";
-import { environmentTemplate, formForgotTemplate, formLoginTemplate, formLoginWrapperTemplate, formRedefTemplate, formRegisterTemplate, formUpdateUserTemplate, managerContextTemplate, managerPageTemplate, nextConfigTemplate, nextDecodeClaimsTemplate, nextRequestApiTemplate, nextSessionTypeTemplate, nextSignOutTemplate } from "../templates";
+import { environmentTemplate, formForgotTemplate, formLoginTemplate, formLoginWrapperTemplate, formRedefTemplate, formRegisterTemplate, formUpdateUserTemplate, managerContextTemplate, managerPageTemplate, nextConfigTemplate, nextDecodeClaimsTemplate, nextRequestApiTemplate, nextSessionTypeTemplate } from "../templates";
 import { INextAuthBuilder } from "./interfaces/next-auth-builder.interface";
 import { formSchemeLoginTemplate, formSchemeRedefTemplate, formSchemeRegisterTemplate, formSchemeUpdateUserTemplate } from "../templates/forms/schems";
 import { hiddenPathsTemplate } from "../templates/config/hiddenpaths";
 import { proxyTemplate } from "../templates/config/proxy";
 import { captureErrorLayoutTemplate, mainLayoutTemplate, managerLayoutCssTemplate, managerLayoutTemplate, privateNextLayoutTemplate, publicLayoutTemplate, rootLayoutMinimalTemplate } from "../templates/layouts";
 import { buttonGenericTemplate, footerTemplate, headerTemplate, menuAsideTemplate } from "../templates/components";
-import { DependencyFramemotionInstaller } from "../utils/services/install-frame-motion.service";
+import { DependencyFramemotionAndNextAuthInstaller } from "../utils/services/install-nextauth-motion.service";
 
 export class NextAuthBuilder implements INextAuthBuilder {
     private basePath!: string;
     private readonly options?: BuilderOptions;
-    private readonly commitQueue: string[] = [];
 
     constructor(options?: BuilderOptions) {
         this.options = options;
@@ -25,9 +24,9 @@ export class NextAuthBuilder implements INextAuthBuilder {
         gitCommit(message);
     }
 
-    private registerCommit(message: string) {
-        if (!this.options?.git) return;
-        this.commitQueue.push(message);
+    installDependencesRequired() {
+        DependencyFramemotionAndNextAuthInstaller.getInstance().install();
+        return this;
     }
 
     setBasePathAndCreateConfig() {
@@ -49,7 +48,6 @@ export class NextAuthBuilder implements INextAuthBuilder {
 
         createFile(path.join(this.basePath, "decode-claims.ts"), nextDecodeClaimsTemplate());
         createFile(path.join(this.basePath, "request-api.ts"), nextRequestApiTemplate());
-        createFile(path.join(this.basePath, "singout.ts"), nextSignOutTemplate());
 
         this.basePath = path.join(process.cwd(), "src/utils");
         createDir(this.basePath);
@@ -101,14 +99,7 @@ export class NextAuthBuilder implements INextAuthBuilder {
             created = true;
         }
 
-        if (created && this.options?.git) { this.registerCommit("feat(auth): create next-auth user forms"); }
-        return this;
-    }
-
-    createNextAutorizationSystem() {
-        this.basePath = path.join(process.cwd(), "src");
-        createFile(path.join(this.basePath, "proxy.ts"), proxyTemplate());
-        if (this.options?.git) this.createCommit("feat(next-auth): create proxy for autorize users in frontend.");
+        if (created && this.options?.git) { this.createCommit("feat(auth): create next-auth user forms"); }
         return this;
     }
 
@@ -212,8 +203,6 @@ export class NextAuthBuilder implements INextAuthBuilder {
         const menuAsideDir = path.join(componentsDir, "MenuAside");
         const buttonGenericDir = path.join(componentsDir, "ButtonGeneric");
 
-        DependencyFramemotionInstaller.getInstance().install();
-
         let created = false;
 
         // create context
@@ -253,6 +242,13 @@ export class NextAuthBuilder implements INextAuthBuilder {
 
         if (created && this.options?.git) { this.createCommit("feat(core): create manager context and essential layout components"); };
 
+        return this;
+    }
+
+    createNextAutorizationSystem() {
+        this.basePath = path.join(process.cwd(), "src");
+        createFile(path.join(this.basePath, "proxy.ts"), proxyTemplate());
+        if (this.options?.git) this.createCommit("feat(next-auth): create proxy for autorize users in frontend.");
         return this;
     }
 

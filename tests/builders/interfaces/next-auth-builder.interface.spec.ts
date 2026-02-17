@@ -5,6 +5,7 @@ describe("NextAuthBuilder interface", () => {
 
   beforeAll(() => {
     nextAuthBuilder = {
+      installDependencesRequired() { return this; },
       setBasePathAndCreateConfig() { return this; },
       createNextAuthAuxOptions() { return this; },
       createNextAuthForms() { return this; },
@@ -18,6 +19,7 @@ describe("NextAuthBuilder interface", () => {
   });
 
   it("should have the correct methods", () => {
+    expect(typeof nextAuthBuilder.installDependencesRequired).toBe("function");
     expect(typeof nextAuthBuilder.setBasePathAndCreateConfig).toBe("function");
     expect(typeof nextAuthBuilder.createNextAuthAuxOptions).toBe("function");
     expect(typeof nextAuthBuilder.createNextAuthForms).toBe("function");
@@ -31,7 +33,7 @@ describe("NextAuthBuilder interface", () => {
 
   it("should have 9 methods", () => {
     const methodCount = Object.keys(nextAuthBuilder).length;
-    expect(methodCount).toBe(9);
+    expect(methodCount).toBe(10);
   });
 
 });

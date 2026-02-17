@@ -1,7 +1,7 @@
 import path from "node:path";
 import pluralize from "pluralize";
-import { formCreateTemplate, formDeleteTemplate, formSchemeCreateTemplate, formSchemeUpdateTemplate, formUpdateTemplate, inputTemplate } from "../templates";
-import { createDir, createFile, pathExists } from "../utils/fs";
+import { inputTemplate } from "../templates";
+import { createDir, createFile } from "../utils/fs";
 import { capitalize } from "../utils/string";
 import { listPageTemplate } from "../templates/pages/list-page";
 import { detailPageTemplate } from "../templates/pages/detail-page";
@@ -30,14 +30,14 @@ export class NextResourceBuilder implements IResourceBuilder {
     gitCommit(message);
   }
 
-  setBasePath() {
-    this.basePath = path.join(process.cwd(), "src/app/(privates)", this.resource);
-    createDir(this.basePath);
+  // required for components only
+  installDependencesRequired() {
+    DependencyInstaller.getInstance().install();
     return this;
   }
 
-  setBasePathForForm() {
-    this.basePath = path.join(process.cwd(), "src/forms");
+  setBasePath() {
+    this.basePath = path.join(process.cwd(), "src/app/(privates)", this.resource);
     createDir(this.basePath);
     return this;
   }
@@ -88,41 +88,6 @@ export class NextResourceBuilder implements IResourceBuilder {
     createFile(path.join(dir, "page.tsx"), newPageTemplate(capitalize(this.singular), capitalize(this.resource)));
     return this;
   }
-
-  createCrudForm() {
-    const sharedPath = path.join(this.basePath, "shared");
-    const deletePath = path.join(sharedPath, "FormDelete");
-
-    if (!pathExists(deletePath)) {
-      createDir(sharedPath);
-      createDir(deletePath);
-      createFile(path.join(deletePath, "index.tsx"), formDeleteTemplate(capitalize(this.singular), capitalize(this.resource)));
-      createFile(path.join(sharedPath, "index.ts"), `export { FormDeleteResource } from "./FormDelete";\n`);
-    }
-
-    const resourcePath = path.join(this.basePath, this.resource);
-    createDir(resourcePath);
-
-    DependencyInstaller.getInstance().install();
-
-    const formNewPath = path.join(resourcePath, "FormNew");
-    createDir(formNewPath);
-    createFile(path.join(formNewPath, "index.tsx"), formCreateTemplate(capitalize(this.singular), capitalize(this.resource)));
-    createFile(path.join(formNewPath, "form-scheme.ts"), formSchemeCreateTemplate());
-
-    const formEditPath = path.join(resourcePath, "FormEdit");
-    createDir(formEditPath);
-    createFile(path.join(formEditPath, "index.tsx"), formUpdateTemplate(capitalize(this.singular), capitalize(this.resource)));
-    createFile(path.join(formEditPath, "form-scheme.ts"), formSchemeUpdateTemplate(capitalize(this.singular), capitalize(this.resource)));
-    createFile(path.join(resourcePath, "index.ts"), `
-      export { FormNew${capitalize(this.singular)} } from "./FormNew";\n
-      export { FormEdit${capitalize(this.singular)} } from "./FormEdit";
-    `);
-
-    this.createCommit(`feat(${this.resource}): created crud form components`);
-
-    return this;
-  };
 
   build() {
     if (!this.options?.git) return;

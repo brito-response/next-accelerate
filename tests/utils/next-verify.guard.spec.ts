@@ -1,5 +1,5 @@
 import fs from "fs";
-import { nextProjectGuardSimple } from "../src/utils/guards/index";
+import { nextProjectGuardSimple } from "../../src/utils/guards/index";
 
 jest.mock("fs");
 

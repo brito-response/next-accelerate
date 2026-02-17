@@ -1,4 +1,5 @@
-import { NextResourceBuilder } from "../builders/resource-builder";
+
+import { NextResourceFormBuilder } from "../builders/resource-form-builder";
 import { nextProjectGuardSimple } from "../utils/guards";
 
 export function createFormForResource(inputName?: string, options?: { git?: boolean }) {
@@ -9,7 +10,7 @@ export function createFormForResource(inputName?: string, options?: { git?: bool
     process.exit(1);
   }
 
-  const builder = new NextResourceBuilder(inputName, options);
-  builder.setBasePathForComponents().createComponentInputCustom().setBasePathForForm().createCrudForm().build();
+  const builder = new NextResourceFormBuilder(inputName, options);
+  builder.installDependencesRequired().setBasePathForForm().setBasePathForComponents().createButtonComponentForUseInForm().createCrudForm().build();
   console.log(`Form for the resource "${inputName}" created \x1b[32m✔ Success\x1b[0m`);
 };

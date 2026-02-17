@@ -1,5 +1,5 @@
-jest.mock("../../src/utils/services/install-dependences.service", () => ({
-    DependencyInstaller: {
+jest.mock("../../src/utils/services/install-dependences-form.service", () => ({
+    DependencyFormInstaller: {
         getInstance: jest.fn().mockReturnValue({
             install: jest.fn().mockResolvedValue(undefined), // mock assíncrono seguro
         }),
@@ -7,23 +7,25 @@ jest.mock("../../src/utils/services/install-dependences.service", () => ({
 }));
 
 import { createFormForResource } from "../../src/commands/create-form-resource";
-import { NextResourceBuilder } from "../../src/builders/resource-builder";
+import { NextResourceFormBuilder } from "../../src/builders/resource-form-builder";
 import * as guards from "../../src/utils/guards";
 
 jest.mock("../../src/utils/guards", () => ({ nextProjectGuardSimple: jest.fn() }));
 
-const setBasePathForComponents = jest.fn().mockReturnThis();
-const createComponentInputCustom = jest.fn().mockReturnThis();
+const installDependencesRequired = jest.fn().mockReturnThis();
 const setBasePathForForm = jest.fn().mockReturnThis();
+const setBasePathForComponents = jest.fn().mockReturnThis();
+const createButtonComponentForUseInForm = jest.fn().mockReturnThis();
 const createCrudForm = jest.fn().mockReturnThis();
 const build = jest.fn();
 
-jest.mock("../../src/builders/resource-builder", () => {
+jest.mock("../../src/builders/resource-form-builder", () => {
     return {
-        NextResourceBuilder: jest.fn().mockImplementation(() => ({
-            setBasePathForComponents,
-            createComponentInputCustom,
+        NextResourceFormBuilder: jest.fn().mockImplementation(() => ({
+            installDependencesRequired,
             setBasePathForForm,
+            setBasePathForComponents,
+            createButtonComponentForUseInForm,
             createCrudForm,
             build
         })),
@@ -57,16 +59,17 @@ describe("createFormForResource command", () => {
 
     it("should instantiate builder with input name", () => {
         createFormForResource("product", { git: false }); // when
-        expect(NextResourceBuilder).toHaveBeenCalledWith("product", expect.any(Object)); // then
+        expect(NextResourceFormBuilder).toHaveBeenCalledWith("product", expect.any(Object)); // then
     });
 
     it("should execute form builder steps in chain", () => {
         createFormForResource("user", { git: false }); // when
 
         // then
-        expect(setBasePathForComponents).toHaveBeenCalled();
-        expect(createComponentInputCustom).toHaveBeenCalled();
+        expect(installDependencesRequired).toHaveBeenCalled();
         expect(setBasePathForForm).toHaveBeenCalled();
+        expect(setBasePathForComponents).toHaveBeenCalled();
+        expect(createButtonComponentForUseInForm).toHaveBeenCalled();
         expect(createCrudForm).toHaveBeenCalled();
         expect(build).toHaveBeenCalled();
     });
@@ -75,8 +78,8 @@ describe("createFormForResource command", () => {
         createFormForResource("user", { git: false }); // when
 
         // then -- invoc 0 < 1 ... sequence
-        expect(setBasePathForComponents.mock.invocationCallOrder[0]).toBeLessThan(createComponentInputCustom.mock.invocationCallOrder[0]);
-        expect(createComponentInputCustom.mock.invocationCallOrder[0]).toBeLessThan(setBasePathForForm.mock.invocationCallOrder[0]);
+        expect(setBasePathForComponents.mock.invocationCallOrder[0]).toBeLessThan(createButtonComponentForUseInForm.mock.invocationCallOrder[0]);
+        expect(createButtonComponentForUseInForm.mock.invocationCallOrder[0]).toBeLessThan(createCrudForm.mock.invocationCallOrder[0]);
     });
 
     it("should show success message", () => {

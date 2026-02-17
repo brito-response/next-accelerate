@@ -4,6 +4,7 @@ import * as guards from "../../src/utils/guards";
 
 jest.mock("../../src/utils/guards", () => ({ nextProjectGuardSimple: jest.fn() }));
 
+const installDependencesRequired = jest.fn().mockReturnThis();
 const setBasePathAndCreateConfig = jest.fn().mockReturnThis();
 const createNextAuthAuxOptions = jest.fn().mockReturnThis();
 const createNextAuthForms = jest.fn().mockReturnThis();
@@ -17,6 +18,7 @@ const build = jest.fn();
 jest.mock("../../src/builders/next-auth-builder", () => {
     return {
         NextAuthBuilder: jest.fn().mockImplementation(() => ({
+            installDependencesRequired,
             setBasePathAndCreateConfig,
             createNextAuthAuxOptions,
             createNextAuthForms,

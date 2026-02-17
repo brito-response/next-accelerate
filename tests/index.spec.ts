@@ -37,6 +37,7 @@ describe("cli entrypoint (index.ts)", () => {
     const foundCases = [...switchBlock.matchAll(/^\s*(case\s+"[^"]+":|default:)/gm)].map((m) => m[1] || m[0]);
     const expectedCases = [
       'case "create":',
+      'case "create:components":',
       'case "create:form":',
       'case "config:next-auth":',
       'case "-help":',
@@ -53,6 +54,7 @@ describe("cli entrypoint (index.ts)", () => {
     const expectedLogs = [
       'console.log("commands available in the cli:");',
       'console.log("  create <resource-name> - creates all folders for a new resource.");',
+      'console.log("  create:components <resource-name> - create compoenets resource.");',
       'console.log("  create:form <resource-name> - creates a new form for the resource");',
       'console.log("  config:next-auth - creates a new form for the resource");',
     ];

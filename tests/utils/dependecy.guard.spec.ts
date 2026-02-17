@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { hasDependency } from "../src/utils/guards/dependency.guard";
+import { hasDependency } from "../../src/utils/guards/dependency.guard";
 
 jest.mock("node:fs");
 

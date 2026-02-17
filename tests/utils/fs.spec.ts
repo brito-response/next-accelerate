@@ -6,7 +6,7 @@ jest.mock("fs", () => ({
 }));
 
 import fs from "fs";
-import { createDir, createFile, pathExists, moveFile } from "../src/utils/fs";
+import { createDir, createFile, pathExists, moveFile } from "../../src/utils/fs";
 
 const mockedFs = fs as jest.Mocked<typeof fs>;
 

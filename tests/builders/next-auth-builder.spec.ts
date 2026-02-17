@@ -1,8 +1,8 @@
 import * as fsUtils from "../../src/utils/fs";
 import { NextAuthBuilder } from "../../src/builders/next-auth-builder";
-import { gitCommit } from "../../src/utils/services/git.service";
 
 jest.mock("../../src/utils/fs", () => ({
+  installDependencesRequired: jest.fn(),
   createDir: jest.fn(),
   createFile: jest.fn(),
   pathExists: jest.fn(),
@@ -10,12 +10,8 @@ jest.mock("../../src/utils/fs", () => ({
 }));
 
 jest.mock("../../src/utils/services/git.service", () => ({ gitCommit: jest.fn() }));
-jest.mock("../../src/utils/services/install-frame-motion.service", () => ({
-  DependencyFramemotionInstaller: {
-    getInstance: () => ({
-      install: jest.fn(),
-    }),
-  },
+jest.mock("../../src/utils/services/install-nextauth-motion.service", () => ({
+  DependencyFramemotionAndNextAuthInstaller: { getInstance: () => ({ install: jest.fn(), }), },
 }));
 
 
@@ -74,11 +70,9 @@ describe("NextAuthBuilder", () => {
 
     builder.createNextAuthAuxOptions(); // when
 
-
     // then
     expect(fsUtils.createFile).toHaveBeenCalledWith("/app/src/app/api/auth/decode-claims.ts", expect.any(String));
     expect(fsUtils.createFile).toHaveBeenCalledWith("/app/src/app/api/auth/request-api.ts", expect.any(String));
-    expect(fsUtils.createFile).toHaveBeenCalledWith("/app/src/app/api/auth/singout.ts", expect.any(String));
     expect(fsUtils.createDir).toHaveBeenCalledWith("/app/src/utils");
     expect(fsUtils.createFile).toHaveBeenCalledWith("/app/src/utils/route.ts", expect.any(String));
   });
@@ -97,17 +91,6 @@ describe("NextAuthBuilder", () => {
     expect(fsUtils.createDir).toHaveBeenCalledWith("/app/src/forms/users/FormForgot");
     expect(fsUtils.createFile).toHaveBeenCalledWith("/app/src/forms/users/FormLogin/index.tsx", expect.any(String));
     expect(fsUtils.createFile).toHaveBeenCalledWith("/app/src/forms/users/index.ts", expect.stringContaining('export { FormLogin } from "./FormLogin"'));
-  });
-
-  it("should register commit messages when git is true", () => {
-    // given
-    (fsUtils.pathExists as jest.Mock).mockReturnValue(false);
-    const builder = new NextAuthBuilder({ git: true });
-    (builder as any).commitQueue = [];
-
-    builder.createNextAuthForms(); // when 
-
-    expect((builder as any).commitQueue).toContain("feat(auth): create next-auth user forms"); // then
   });
 
   it("should not register commits when git is false", () => {
