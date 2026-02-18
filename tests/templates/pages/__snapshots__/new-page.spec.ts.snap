@@ -1,12 +1,15 @@
-export const newPageTemplate = (resourceInSingular: string, resourceInPlural: string) => `
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`newPageTemplate should match snapshot 1`] = `
+"
   import { FilePlus2, Info } from "lucide-react";
   import { authOptions } from "@/app/api/auth/[...nextauth]/route";
   import { Session } from "@/utils/route";
   import { getServerSession } from "next-auth";
   import { redirect } from "next/navigation";
-  import { FormNew${resourceInSingular} } from "@/forms/${resourceInPlural.toLocaleLowerCase()}";
+  import { FormNewPost } from "@/forms/posts";
 
-  export default async function New${resourceInSingular}Page() {
+  export default async function NewPostPage() {
     const session: Session | null = await getServerSession(authOptions);
     if (!session) redirect("/");
 
@@ -33,14 +36,15 @@ export const newPageTemplate = (resourceInSingular: string, resourceInPlural: st
           <section className="mb-12 rounded-2xl bg-background shadow-sm p-6 flex gap-3">
             <Info className="w-5 h-5 text-muted-foreground mt-0.5" />
             <p className="text-sm text-muted-foreground">
-              Você pode editar este ${resourceInSingular.toLowerCase()} depois de publicado. Certifique-se de revisar
+              Você pode editar este post depois de publicado. Certifique-se de revisar
               o conteúdo antes de salvar.
             </p>
           </section>
 
-          <FormNew${resourceInSingular} />
+          <FormNewPost />
         </div>
       </div>
     );
   }
+"
 `;

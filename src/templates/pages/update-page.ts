@@ -1,11 +1,12 @@
 export const updatePageTemplate = (resourceInSingular: string,resourceInPlural: string) => `
   import { authOptions } from "@/app/api/auth/[...nextauth]/route";
   import { FormEdit${resourceInSingular} } from "@/forms/${resourceInPlural.toLocaleLowerCase()}";
-  import { ${resourceInSingular} } from "@/utils/models/${resourceInPlural.toLocaleLowerCase()}";
-  import { Session } from "@/utils/session";
+  //import { ${resourceInSingular} } from "@/utils/models/${resourceInPlural.toLocaleLowerCase()}";
+  import { Session } from "@/utils/route";
   import { getServerSession } from "next-auth";
   import { redirect } from "next/navigation";
 
+  type ${resourceInSingular} = {}
   interface PageProps { params: { ${resourceInSingular.toLocaleLowerCase()}Id: string; }; };
 
   async function get${resourceInSingular}ById(${resourceInSingular.toLocaleLowerCase()}Id: string, token: string): Promise< ${resourceInSingular} | null> {
@@ -20,10 +21,10 @@ export const updatePageTemplate = (resourceInSingular: string,resourceInPlural: 
         }
       );
       if (!response.ok) { return null; };
-      const post: Post = await response.json();
-      return post;
+      const ${resourceInSingular.toLocaleLowerCase()}: ${resourceInSingular} = await response.json();
+      return ${resourceInSingular.toLocaleLowerCase()};
     } catch (error) {
-      console.error("Erro ao buscar post:", error);
+      console.error("Erro ao buscar ${resourceInSingular.toLocaleLowerCase()}:", error);
       return null;
     }
   };

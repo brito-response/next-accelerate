@@ -10,7 +10,7 @@ export function createFormForResource(inputName?: string, options?: { git?: bool
   }
 
   const builder = new NextResourceFormBuilder(inputName, options);
-  builder.installDependencesRequired().setBasePathForForm().setBasePathForComponents().createButtonComponentForUseInForm().createCrudForm().build();
+  builder.setBasePathForForm().setBasePathForComponents().createButtonComponentForUseInForm().createCrudForm().installDependencesRequired().build();
 
   console.log(`Form for the resource "${inputName}" created \x1b[32m✔ Success\x1b[0m`);
 };

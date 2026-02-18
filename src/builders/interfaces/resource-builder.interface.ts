@@ -1,4 +1,6 @@
-export interface IResourceBuilder {
+import { INextInstallInBuilder } from "./resource-install-builder.interface";
+
+export interface IResourceBuilder extends INextInstallInBuilder {
   installDependencesRequired(): this;
   setBasePath(): this;
   setBasePathForComponents(): this;
@@ -6,5 +8,4 @@ export interface IResourceBuilder {
   createListPage(): this;
   createDetailPage(): this;
   createNewPage(): this;
-  build(): void;
 };

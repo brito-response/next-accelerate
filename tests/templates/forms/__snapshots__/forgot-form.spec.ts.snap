@@ -1,4 +1,7 @@
-export const formForgotTemplate = () => `
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`formForgotTemplate should match snapshot 1`] = `
+"
 "use client";
 
 import Link from "next/link";
@@ -82,4 +85,5 @@ export const FormForgot = () => {
         </div>
     );
 };
+"
 `;

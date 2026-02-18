@@ -1,5 +1,4 @@
 import path from "node:path";
-import pluralize from "pluralize";
 import { inputTemplate } from "../templates";
 import { createDir, createFile } from "../utils/fs";
 import { capitalize } from "../utils/string";
@@ -10,24 +9,13 @@ import { IResourceBuilder } from "./interfaces/resource-builder.interface";
 import { updatePageTemplate } from "../templates/pages/update-page";
 import { deletePageTemplate } from "../templates/pages/delete-page";
 import { BuilderOptions } from "../utils/contracts/build-options";
-import { gitCommit } from "../utils/services/git.service";
 import { DependencyInstaller } from "../utils/services/install-dependences.service";
+import { NextAccelerateBuilder } from "./core/next-accelerate-builder";
 
-export class NextResourceBuilder implements IResourceBuilder {
-  private readonly resource: string;
-  private readonly singular: string;
-  private basePath!: string;
-  private readonly options?: BuilderOptions;
+export class NextResourceBuilder extends NextAccelerateBuilder implements IResourceBuilder {
 
-  constructor(private readonly inputName: string, options?: BuilderOptions) {
-    this.options = options;
-    this.resource = pluralize(inputName.toLowerCase());
-    this.singular = pluralize.singular(this.resource);
-  }
-
-  private createCommit(message: string) {
-    if (!this.options?.git) return;
-    gitCommit(message);
+  constructor(inputName: string, options?: BuilderOptions) {
+    super(inputName, options);
   }
 
   // required for components only
@@ -89,9 +77,5 @@ export class NextResourceBuilder implements IResourceBuilder {
     return this;
   }
 
-  build() {
-    if (!this.options?.git) return;
-    console.log("commits made successfully ✨")
-  };
 };
 

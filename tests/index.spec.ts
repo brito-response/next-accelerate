@@ -54,13 +54,14 @@ describe("cli entrypoint (index.ts)", () => {
     expect(helpCaseMatch).not.toBeNull();
     const helpBlock = helpCaseMatch![1];
     const expectedLogs = [
-      'console.log("commands available in the cli:");',
-      'console.log("  create <resource-name> - creates all folders for a new resource.");',
-      'console.log("  create:components - create components resource.");',
-      'console.log("  create:form <resource-name> - creates a new form for the resource");',
-      'console.log("  config:next-auth - creates a new form for the resource");',
-      'console.log("  create:api-commons - creates commons api resource");',
-      'console.log("  create:api-resource <resource-name> - creates a new api resource");',
+      'console.log("\\n\\n\\x1b[35mcommands available in the cli: \\x1b[0m");',
+      'console.log("  \\x1b[32mcreate\\x1b[0m \\x1b[33mresource_name\\x1b[0m                          -> creates all folders for a new resource.");',
+      'console.log("  \\x1b[32mcreate:components\\x1b[0m                             -> create components resource.");',
+      'console.log("  \\x1b[32mcreate:form\\x1b[0m \\x1b[33mresource_name\\x1b[0m                     -> creates a new form for the resource");',
+      'console.log("  \\x1b[32mconfig:next-auth\\x1b[0m                              -> creates a new form for the resource");',
+      'console.log("  \\x1b[32mcreate:api-commons\\x1b[0m                            -> creates commons api resource");',
+      'console.log("  \\x1b[32mcreate:api-resource\\x1b[0m \\x1b[33mresource-name\\x1b[0m             -> creates a new api resource");',
+      'console.log("\\n\\n");',
     ];
 
     const lines = helpBlock.split("\n").map((l) => l.trim()).filter(Boolean); // when

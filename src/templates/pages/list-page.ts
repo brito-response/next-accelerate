@@ -1,9 +1,10 @@
 export const listPageTemplate = (resourceInSingular: string, resourceInPlural: string) => `
-  import { ActionButtonsBar } from "@/components/ActionButtonsBar";
-  import { ${resourceInSingular} } from "@/utils/models/${resourceInPlural.toLocaleLowerCase()}";
+  // import { ActionButtonsBar } from "@/components/ActionButtonsBar";
+  // import { ${resourceInSingular} } from "@/utils/models/${resourceInPlural.toLocaleLowerCase()}";
   import { FileCogIcon, FileText, TableConfigIcon } from "lucide-react";
   import Link from "next/link";
 
+  type ${resourceInSingular} = {};
   async function get${resourceInPlural.toLocaleLowerCase()}(): Promise<${resourceInSingular}[]> {
     const response = await fetch(\`\${process.env.NEXT_BACKEND_URL}/${resourceInPlural.toLowerCase()}\`, {
       cache: "no-store",
@@ -34,7 +35,7 @@ export const listPageTemplate = (resourceInSingular: string, resourceInPlural: s
             </div>
           </header>
 
-          {/* Posts list */}
+          {/* ${resourceInPlural} list */}
           <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {${resourceInPlural.toLocaleLowerCase().toLocaleLowerCase()}.map((${resourceInSingular.toLocaleLowerCase()}: ${resourceInSingular}) => (
               <article key={${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLocaleLowerCase()}Id} className="rounded-2xl bg-background p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
@@ -53,13 +54,13 @@ export const listPageTemplate = (resourceInSingular: string, resourceInPlural: s
 
                   </div>
                 </div>
-                <ActionButtonsBar linkToEdit={\`/${resourceInPlural.toLocaleLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLocaleLowerCase()}Id}/edit\`} linkToDelete={\`/${resourceInSingular.toLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLowerCase()}Id}/delete\`} />
+                // <ActionButtonsBar linkToEdit={\`/${resourceInPlural.toLocaleLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLocaleLowerCase()}Id}/edit\`} linkToDelete={\`/${resourceInSingular.toLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLowerCase()}Id}/delete\`} />
               </article>
             ))}
           </section>
 
           {/* Empty state */}
-          {posts.length === 0 && (
+          {${resourceInPlural.toLocaleLowerCase()}.length === 0 && (
             <div className="mt-20 text-center text-muted-foreground">
               <FileText className="w-10 h-10 mx-auto mb-3 opacity-50" />
               <p>Nenhum ${resourceInSingular.toLocaleLowerCase()} encontrado</p>

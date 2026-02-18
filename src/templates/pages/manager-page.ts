@@ -1,6 +1,6 @@
 export const managerPageTemplate = () => `
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Session } from "@/utils/session";
+import { Session } from "@/utils/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 

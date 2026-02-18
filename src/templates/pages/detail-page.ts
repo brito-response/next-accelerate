@@ -1,6 +1,6 @@
 
 export const detailPageTemplate = (resourceInSingular: string) => `
-  interface PageProps {params: {${resourceInSingular}Id: string;};};
+  interface PageProps {params: {${resourceInSingular.toLocaleLowerCase()}Id: string;};};
 
   export default function ${resourceInSingular}DetailPage({ params }: PageProps) {
     const { ${resourceInSingular.toLocaleLowerCase()}Id } = params;

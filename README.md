@@ -15,6 +15,17 @@
 
 > The next.js project should follow the development pattern with (App Router).
 > Your project should follow a standardized folder structure using (Nested Layouts or Layout Composition) and Route Groups.
+> create next project with settings custom
+
+ex: npx create-next-app frontend
+
+? Would you like to use the recommended Next.js defaults? › - Use arrow-keys. Return to submit.
+
+-   Yes, use recommended defaults
+
+-   No, reuse previous settings
+
+- ❯   No, **_customize settings_**
 
 ## 📦 Installation
 

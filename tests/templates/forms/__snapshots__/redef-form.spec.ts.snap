@@ -1,4 +1,7 @@
-export const formRedefTemplate = () => `
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`formRedefTemplate should match snapshot 1`] = `
+"
 "use client";
 
 import { useForm, FormProvider } from 'react-hook-form';
@@ -52,4 +55,5 @@ export const FormRedef = () => {
     </FormProvider>
   );
 }
+"
 `;

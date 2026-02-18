@@ -21,7 +21,7 @@ export const FormDeleteResource: React.FC<FormDeleteResourceProps> = ({ resource
       }
       else {
         toast.error("Erro ao deletar recurso");
-         router.push("/${resourceInSingular.toLowerCase()}s");
+         router.push("/manager");
       };
 
     } catch (error) {

@@ -1,5 +1,6 @@
-export interface INextAuthBuilder {
-  installDependencesRequired(): this;
+import { INextInstallInBuilder } from "./resource-install-builder.interface";
+
+export interface INextAuthBuilder extends INextInstallInBuilder {
   setBasePathAndCreateConfig(): this;
   createNextAuthAuxOptions(): this;
   createNextAuthForms(): this;
@@ -8,5 +9,5 @@ export interface INextAuthBuilder {
   setLayouts(): this;
   createComponentsAux(): this;
   setEnvironmentVariable(): this;
-  build(): void;
+
 };

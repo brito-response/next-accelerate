@@ -1,4 +1,7 @@
-export const formUpdateUserTemplate = () => `
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`formUpdateUserTemplate should match snapshot 1`] = `
+"
 "use client";
 
 import { useForm, FormProvider, type Resolver } from "react-hook-form";
@@ -105,4 +108,5 @@ export const FormUpdateUser = () => {
     </FormProvider>
   );
 };
+"
 `;

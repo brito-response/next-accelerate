@@ -1,29 +1,17 @@
 import path from "node:path";
-import pluralize from "pluralize";
 import { formCreateTemplate, formDeleteTemplate, formSchemeCreateTemplate, formSchemeUpdateTemplate, formUpdateTemplate } from "../templates";
 import { createDir, createFile, pathExists } from "../utils/fs";
 import { capitalize } from "../utils/string";
 import { BuilderOptions } from "../utils/contracts/build-options";
-import { gitCommit } from "../utils/services/git.service";
 import { IResourceFormBuilder } from "./interfaces/resource-form-builder.interface";
 import { DependencyFormInstaller } from "../utils/services/install-dependences-form.service";
 import { buttonGenericTemplate } from "../templates/components";
+import { NextAccelerateBuilder } from "./core/next-accelerate-builder";
 
-export class NextResourceFormBuilder implements IResourceFormBuilder {
-  private readonly resource: string;
-  private readonly singular: string;
-  private basePath!: string;
-  private readonly options?: BuilderOptions;
+export class NextResourceFormBuilder extends NextAccelerateBuilder implements IResourceFormBuilder {
 
-  constructor(private readonly inputName: string, options?: BuilderOptions) {
-    this.options = options;
-    this.resource = pluralize(inputName.toLowerCase());
-    this.singular = pluralize.singular(this.resource);
-  }
-
-  private createCommit(message: string) {
-    if (!this.options?.git) return;
-    gitCommit(message);
+  constructor(inputName: string, options?: BuilderOptions) {
+    super(inputName, options);
   }
 
   installDependencesRequired() {
@@ -51,6 +39,7 @@ export class NextResourceFormBuilder implements IResourceFormBuilder {
   }
 
   createCrudForm() {
+    this.basePath = path.join(process.cwd(), "src/forms");
     const sharedPath = path.join(this.basePath, "shared");
     const deletePath = path.join(sharedPath, "FormDelete");
 
@@ -73,19 +62,11 @@ export class NextResourceFormBuilder implements IResourceFormBuilder {
     createDir(formEditPath);
     createFile(path.join(formEditPath, "index.tsx"), formUpdateTemplate(capitalize(this.singular), capitalize(this.resource)));
     createFile(path.join(formEditPath, "form-scheme.ts"), formSchemeUpdateTemplate(capitalize(this.singular), capitalize(this.resource)));
-    createFile(path.join(resourcePath, "index.ts"), `
-      export { FormNew${capitalize(this.singular)} } from "./FormNew";\n
-      export { FormEdit${capitalize(this.singular)} } from "./FormEdit";
-    `);
+    createFile(path.join(resourcePath, "index.ts"), `export { FormNew${capitalize(this.singular)} } from "./FormNew";\n export { FormEdit${capitalize(this.singular)} } from "./FormEdit";`);
 
-    this.createCommit(`feat(${this.resource}): created crud form components`);
-
+    if (this.options?.git) this.createCommit(`feat(${this.resource}): created crud form components`);
     return this;
   };
 
-  build() {
-    if (!this.options?.git) return;
-    console.log("commits made successfully ✨")
-  };
 };
 

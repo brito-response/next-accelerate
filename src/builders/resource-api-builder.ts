@@ -1,26 +1,14 @@
 import path from "node:path";
-import pluralize from "pluralize";
 import { createDir, createFile, pathExists } from "../utils/fs";
 import { BuilderOptions } from "../utils/contracts/build-options";
-import { gitCommit } from "../utils/services/git.service";
 import { createResourceTemplate, deleteTemplate, imageUploadTemplate, updateResourceTemplate, usersCreateTemplate, usersPhotoTemplate, usersUpdateTemplate } from "../templates";
 import { INextApiBuilder } from "./interfaces/resource-api-builder.interface";
+import { NextAccelerateBuilder } from "./core/next-accelerate-builder";
 
-export class NextResourceApiBuilder implements INextApiBuilder{
-    private readonly resource: string;
-    private readonly singular: string;
-    private basePath!: string;
-    private readonly options?: BuilderOptions;
+export class NextResourceApiBuilder extends NextAccelerateBuilder implements INextApiBuilder {
 
-    constructor(private readonly inputName: string, options?: BuilderOptions) {
-        this.options = options;
-        this.resource = pluralize(inputName.toLowerCase());
-        this.singular = pluralize.singular(this.resource);
-    }
-
-    private createCommit(message: string) {
-        if (!this.options?.git) return;
-        gitCommit(message);
+    constructor(inputName: string, options?: BuilderOptions) {
+        super(inputName, options);
     }
 
     setDefaultPath() {
@@ -51,12 +39,12 @@ export class NextResourceApiBuilder implements INextApiBuilder{
         // images
         const imageRoutePath = path.join(imagesBase, "[resource]", "[resourceId]");
         createDir(imageRoutePath);
-        createFile(path.join(imageRoutePath, "route.ts"),imageUploadTemplate());
+        createFile(path.join(imageRoutePath, "route.ts"), imageUploadTemplate());
 
         // delete
         const deleteRoutePath = path.join(deleteBase, "[resource]", "[resourceId]");
         createDir(deleteRoutePath);
-        createFile(path.join(deleteRoutePath, "route.ts"),deleteTemplate());
+        createFile(path.join(deleteRoutePath, "route.ts"), deleteTemplate());
 
         if (this.options?.git) this.createCommit("feat(api): add common resource routes");
         return this;
@@ -99,10 +87,5 @@ export class NextResourceApiBuilder implements INextApiBuilder{
         if (this.options?.git) this.createCommit(`feat(api/${this.resource}): add create and update routes`);
         return this;
     }
-
-    build() {
-        if (!this.options?.git) return;
-        console.log("commits made successfully ✨")
-    };
 };
 

@@ -1,4 +1,7 @@
-export const formRegisterTemplate = () => `
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`formRegisterTemplate should match snapshot 1`] = `
+"
 "use client";
 
 import { useForm, FormProvider } from "react-hook-form";
@@ -76,4 +79,5 @@ export const FormRegister = () => {
   );
 };
 
+"
 `;
