@@ -47,79 +47,70 @@ describe("create-resource commands", () => {
     jest.restoreAllMocks();
   });
 
-  describe("createResource", () => {
+  // createResource
+  it("should call project guard", () => {
+    createResource("user", { git: false }); // when
 
-    it("should call project guard", () => {
-      createResource("user", { git: false }); // when
-
-      expect(guards.nextProjectGuardSimple).toHaveBeenCalled(); // then
-    });
-
-    it("should show error and exit when name not provided", () => {
-      expect(() => createResource()).toThrow("process.exit called"); // when
-
-      // then
-      expect(console.error).toHaveBeenCalledWith("\x1b[31m ✖ Erro \x1b[0mPlease provide the name of the resource.");
-      expect(process.exit).toHaveBeenCalledWith(1); 
-    });
-
-    it("should instantiate builder with input name", () => {
-      createResource("user", { git: false });  // when
-
-      expect(NextResourceBuilder).toHaveBeenCalledWith("user",expect.any(Object));  // then
-    });
-
-    it("should execute builder steps in chain", () => {
-      createResource("user", { git: false });
-
-      //then
-      expect(setBasePath).toHaveBeenCalled();
-      expect(createListPage).toHaveBeenCalled();
-      expect(createDetailPage).toHaveBeenCalled();
-      expect(createNewPage).toHaveBeenCalled();
-      expect(build).toHaveBeenCalled();
-    });
-
-    it("should show success message", () => {
-      createResource("user", { git: false });
-
-      expect(console.log).toHaveBeenCalledWith('Resource "user" created \x1b[32m✔ Success\x1b[0m');
-    });
+    expect(guards.nextProjectGuardSimple).toHaveBeenCalled(); // then
   });
 
-  describe("createComponents", () => {
-    it("should call project guard", () => {
-      createComponents("input", { git: false });
+  it("should show error and exit when name not provided", () => {
+    expect(() => createResource()).toThrow("process.exit called"); // when
 
-      expect(guards.nextProjectGuardSimple).toHaveBeenCalled();
-    });
-
-    it("should show error and exit when name not provided", () => {
-      expect(() => createComponents()).toThrow("process.exit called");
-
-      expect(console.error).toHaveBeenCalledWith("\x1b[31m ✖ Erro \x1b[0mPlease provide the name of the resource.");
-      expect(process.exit).toHaveBeenCalledWith(1);
-    });
-
-    it("should instantiate builder with input name", () => {
-      createComponents("input", { git: false });
-
-      expect(NextResourceBuilder).toHaveBeenCalledWith("input",expect.any(Object));
-    });
-
-    it("should execute component builder steps in chain", () => {
-      createComponents("input", { git: false });
-
-      expect(installDependencesRequired).toHaveBeenCalled();
-      expect(setBasePathForComponents).toHaveBeenCalled();
-      expect(createComponentInputCustom).toHaveBeenCalled();
-      expect(build).toHaveBeenCalled();
-    });
-
-    it("should show success message", () => {
-      createComponents("input", { git: false }); // when
-
-      expect(console.log).toHaveBeenCalledWith('Resource "input" created \x1b[32m✔ Success\x1b[0m'); // then
-    });
+    // then
+    expect(console.error).toHaveBeenCalledWith("\x1b[31m ✖ Erro \x1b[0mPlease provide the name of the resource.");
+    expect(process.exit).toHaveBeenCalledWith(1);
   });
+
+  it("should instantiate builder with input name", () => {
+    createResource("user", { git: false });  // when
+
+    expect(NextResourceBuilder).toHaveBeenCalledWith("user", expect.any(Object));  // then
+  });
+
+  it("should execute builder steps in chain", () => {
+    createResource("user", { git: false });
+
+    //then
+    expect(setBasePath).toHaveBeenCalled();
+    expect(createListPage).toHaveBeenCalled();
+    expect(createDetailPage).toHaveBeenCalled();
+    expect(createNewPage).toHaveBeenCalled();
+    expect(build).toHaveBeenCalled();
+  });
+
+  it("should show success message", () => {
+    createResource("user", { git: false });
+
+    expect(console.log).toHaveBeenCalledWith('Resource "user" created \x1b[32m✔ Success\x1b[0m');
+  });
+
+  // createComponents
+  it("should call project guard", () => {
+    createComponents({ git: false });
+
+    expect(guards.nextProjectGuardSimple).toHaveBeenCalled();
+  });
+
+  it("should instantiate builder with default name", () => {
+    createComponents({ git: false });
+
+    expect(NextResourceBuilder).toHaveBeenCalledWith("default", expect.any(Object));
+  });
+
+  it("should execute component builder steps in chain", () => {
+    createComponents({ git: false });
+
+    expect(installDependencesRequired).toHaveBeenCalled();
+    expect(setBasePathForComponents).toHaveBeenCalled();
+    expect(createComponentInputCustom).toHaveBeenCalled();
+    expect(build).toHaveBeenCalled();
+  });
+
+  it("should show success message", () => {
+    createComponents({ git: false }); // when
+    expect(console.log).toHaveBeenCalledWith('Resource "components" created \x1b[32m✔ Success\x1b[0m'); // then
+  });
+
+
 });

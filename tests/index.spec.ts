@@ -40,6 +40,8 @@ describe("cli entrypoint (index.ts)", () => {
       'case "create:components":',
       'case "create:form":',
       'case "config:next-auth":',
+      'case "create:api-commons":',
+      'case "create:api-resource":',
       'case "-help":',
       'default:',
     ];
@@ -54,9 +56,11 @@ describe("cli entrypoint (index.ts)", () => {
     const expectedLogs = [
       'console.log("commands available in the cli:");',
       'console.log("  create <resource-name> - creates all folders for a new resource.");',
-      'console.log("  create:components <resource-name> - create compoenets resource.");',
+      'console.log("  create:components - create components resource.");',
       'console.log("  create:form <resource-name> - creates a new form for the resource");',
       'console.log("  config:next-auth - creates a new form for the resource");',
+      'console.log("  create:api-commons - creates commons api resource");',
+      'console.log("  create:api-resource <resource-name> - creates a new api resource");',
     ];
 
     const lines = helpBlock.split("\n").map((l) => l.trim()).filter(Boolean); // when
