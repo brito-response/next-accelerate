@@ -1,5 +1,5 @@
 import path from "node:path";
-import { inputTemplate } from "../templates";
+import { inputFormHelperTestUnitTemplate, inputTemplate, inputTestUnitTemplate } from "../templates";
 import { createDir, createFile } from "../utils/fs";
 import { capitalize } from "../utils/string";
 import { listPageTemplate } from "../templates/pages/list-page";
@@ -41,6 +41,10 @@ export class NextResourceBuilder extends NextAccelerateBuilder implements IResou
     createDir(componentPath);
     createFile(path.join(componentPath, "index.tsx"), inputTemplate());
 
+    if (this.options?.test) {
+      createFile(path.join(componentPath, "InputCustom.spec.tsx"), inputTestUnitTemplate());
+      createFile(path.join(componentPath, "renderWithForm.tsx"), inputFormHelperTestUnitTemplate());
+    };
     if (this.options?.git) this.createCommit(`feat(input): add input custom component`);
 
     return this;

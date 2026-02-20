@@ -5,7 +5,7 @@ import { capitalize } from "../utils/string";
 import { BuilderOptions } from "../utils/contracts/build-options";
 import { IResourceFormBuilder } from "./interfaces/resource-form-builder.interface";
 import { DependencyFormInstaller } from "../utils/services/install-dependences-form.service";
-import { buttonGenericTemplate } from "../templates/components";
+import { buttonGenericTemplate, buttonGenericTemplateUnitTest } from "../templates/components";
 import { NextAccelerateBuilder } from "./core/next-accelerate-builder";
 
 export class NextResourceFormBuilder extends NextAccelerateBuilder implements IResourceFormBuilder {
@@ -35,6 +35,7 @@ export class NextResourceFormBuilder extends NextAccelerateBuilder implements IR
     this.basePath = path.join(process.cwd(), "src/components/ButtonGeneric");
     createDir(this.basePath);
     createFile(path.join(this.basePath, "index.tsx"), buttonGenericTemplate());
+    if (this.options?.test) createFile(path.join(this.basePath, "ButtonGeneric.spec.tsx"), buttonGenericTemplateUnitTest());
     return this;
   }
 

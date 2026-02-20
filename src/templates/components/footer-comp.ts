@@ -61,3 +61,11 @@ export const Footer: React.FC = () => {
 };
 
 `;
+
+export const footerGenericTemplateUnitTest = () => `
+
+`;
+
+export const footerGenericTemplateE2ETest = () => `
+
+`;

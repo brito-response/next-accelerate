@@ -15,7 +15,7 @@ export class DependencyTetsE2EInstaller {
     private hasInstalled = false;
 
     public async install() {
-        if (this.hasInstalled || hasDependency("react-hook-form")) return;
+        if (this.hasInstalled || hasDependency("playwright")) return;
         this.hasInstalled = true;
 
         try {

@@ -8,7 +8,7 @@ export { listPageTemplate } from "./pages/list-page";
 export { newPageTemplate } from "./pages/new-page";
 export { managerPageTemplate } from "./pages/manager-page";
 export { managerContextTemplate } from "./routes/manager-context";
-export { inputTemplate } from "./inputs/input-template";
+export { inputTemplate, inputTestUnitTemplate, inputFormHelperTestUnitTemplate } from "./inputs/input-template";
 export { nextConfigTemplate } from "./routes/nextauth-route";
 export { nextDecodeClaimsTemplate } from "./config/decode-claims";
 export { nextRequestApiTemplate } from "./config/request-api";

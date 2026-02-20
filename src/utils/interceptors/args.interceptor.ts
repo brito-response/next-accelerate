@@ -1,5 +1,5 @@
 type ParsedArgs = { command: string; resource?: string; flags: string[] };
-const ALLOWED_FLAGS = new Set(["--git"]);
+const ALLOWED_FLAGS = new Set(["--git", "--test", "--json"]);
 
 export function useArgsInterceptor(args: string[]): ParsedArgs {
     const [, , ...input] = args;

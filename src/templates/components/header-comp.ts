@@ -90,7 +90,12 @@ export const Header: React.FC = () => {
     </header>
   );
 };
+`;
 
+export const headerGenericTemplateUnitTest = () => `
 
+`;
+
+export const headerGenericTemplateE2ETest = () => `
 
 `;

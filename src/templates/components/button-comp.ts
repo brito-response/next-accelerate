@@ -25,3 +25,11 @@ export const ButtonGeneric: React.FC<ButtonGenericProps> = ({
     );
 };
 `;
+
+export const buttonGenericTemplateUnitTest = () => `
+
+`;
+
+export const buttonGenericTemplateE2ETest = () => `
+
+`;

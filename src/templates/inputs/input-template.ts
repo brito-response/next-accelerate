@@ -73,3 +73,89 @@ export const inputTemplate = () => `
     );
   };
 `;
+
+export const inputFormHelperTestUnitTemplate = () => `
+import { ReactNode } from "react";
+import { render } from "@testing-library/react";
+import { useForm, FormProvider } from "react-hook-form";
+
+export function renderWithForm(ui: ReactNode) {
+    const Wrapper = ({ children }: { children: ReactNode }) => {
+        const methods = useForm();
+
+        return (
+            <form onSubmit={methods.handleSubmit(() => { })}>
+                <FormProvider {...methods}>
+                    {children}
+                    <button type="submit">submit</button>
+                </FormProvider>
+            </form>
+        );
+
+    };
+
+    return render(ui, { wrapper: Wrapper });
+}`;
+
+export const inputTestUnitTemplate = () => `
+import { screen, fireEvent } from "@testing-library/react";
+import { InputCustom } from ".";
+import { renderWithForm } from "./renderWithForm";
+
+describe("InputCustom component", () => {
+
+    it("should render the label and the input.", () => {
+        renderWithForm(<InputCustom name="email" label="Email" placeholder="Digite o email" />);
+
+        expect(screen.getByLabelText("Email:")).toBeInTheDocument();
+        expect(screen.getByPlaceholderText("Digite o email")).toBeInTheDocument();
+
+    });
+
+    it("should allows you to type in the field", () => {
+        renderWithForm(<InputCustom name="name" label="Nome" placeholder="Digite seu nome" />);
+
+        const input = screen.getByPlaceholderText("Digite seu nome");
+
+        fireEvent.change(input, { target: { value: "João" } });
+
+        expect(input).toHaveValue("João");
+
+    });
+
+    it("should shows error when required.", async () => {
+        renderWithForm(<InputCustom name="name" label="Nome" required />);
+
+        fireEvent.click(screen.getByText("submit"));
+
+        expect(await screen.findByText("Campo obrigatório")).toBeInTheDocument();
+
+    });
+
+    it("should validate pattern", async () => {
+        renderWithForm(<InputCustom name="cpf" label="CPF" pattern={/^\d{3}$/} placeholder="123" />);
+
+        const input = screen.getByPlaceholderText("123");
+
+        fireEvent.change(input, { target: { value: "abc" } });
+        fireEvent.click(screen.getByText("submit"));
+
+        expect(await screen.findByText("Formato inválido")).toBeInTheDocument();
+
+    });
+
+    it("should renders textarea", () => {
+        renderWithForm(<InputCustom name="bio" label="Bio" multiline />);
+
+        const textarea = screen.getByRole("textbox");
+        expect(textarea.tagName).toBe("TEXTAREA");
+
+    });
+
+});
+
+`;
+
+export const inputTestE2ETemplate = () => `
+
+`;

@@ -15,7 +15,7 @@ export class DependencyTetsUnitInstaller {
     private hasInstalled = false;
 
     public async install() {
-        if (this.hasInstalled || hasDependency("react-hook-form")) return;
+        if (this.hasInstalled || hasDependency("vitest")) return;
         this.hasInstalled = true;
 
         try {

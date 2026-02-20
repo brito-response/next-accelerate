@@ -46,3 +46,11 @@ export const MenuAside: React.FC = () => {
     </aside>
   );
 };`;
+
+export const menuAsideGenericTemplateUnitTest = () => `
+
+`;
+
+export const menuAsideGenericTemplateE2ETest = () => `
+
+`;
