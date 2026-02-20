@@ -1,0 +1,1 @@
+export { nextConfigViTestTemplate } from "./config-vitest"

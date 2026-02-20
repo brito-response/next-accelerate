@@ -32,8 +32,7 @@ jest.mock("../../src/builders/resource-api-builder", () => {
 describe("createApiResource commands", () => {
 
     beforeAll(() => {
-        jest.spyOn(process, "exit")
-            .mockImplementation((() => { throw new Error("process.exit called"); }) as never);
+        jest.spyOn(process, "exit").mockImplementation((() => { throw new Error("process.exit called"); }) as never);
     });
 
     afterEach(() => {

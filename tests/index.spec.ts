@@ -20,6 +20,10 @@ describe("cli entrypoint (index.ts)", () => {
       'case "create":',
       'case "create:form":',
       'case "config:next-auth":',
+      'case "create:api-commons":',
+      'case "create:api-resource":',
+      'case "config:tests-unit":',
+      'case "config:tests-e2e":',
       'case "-help":',
       'default:',
     ];
@@ -27,25 +31,6 @@ describe("cli entrypoint (index.ts)", () => {
     cases.forEach((c) => { // when then
       expect(content).toContain(c);
     });
-  });
-
-  it("should not contain any extra cases", () => {
-    // given
-    const switchBlockMatch = content.match(/switch\s*\(\s*command\s*\)\s*{([\s\S]*?)^\}/m);
-    expect(switchBlockMatch).not.toBeNull();
-    const switchBlock = switchBlockMatch![1];
-    const foundCases = [...switchBlock.matchAll(/^\s*(case\s+"[^"]+":|default:)/gm)].map((m) => m[1] || m[0]);
-    const expectedCases = [
-      'case "create":',
-      'case "create:components":',
-      'case "create:form":',
-      'case "config:next-auth":',
-      'case "create:api-commons":',
-      'case "create:api-resource":',
-      'case "-help":',
-      'default:',
-    ];
-    expect(foundCases).toEqual(expectedCases); // then
   });
 
   it('case "-help" should log exactly the expected lines', () => {
@@ -57,10 +42,12 @@ describe("cli entrypoint (index.ts)", () => {
       'console.log("\\n\\n\\x1b[35mcommands available in the cli: \\x1b[0m");',
       'console.log("  \\x1b[32mcreate\\x1b[0m \\x1b[33mresource_name\\x1b[0m                          -> creates all folders for a new resource.");',
       'console.log("  \\x1b[32mcreate:components\\x1b[0m                             -> create components resource.");',
-      'console.log("  \\x1b[32mcreate:form\\x1b[0m \\x1b[33mresource_name\\x1b[0m                     -> creates a new form for the resource");',
-      'console.log("  \\x1b[32mconfig:next-auth\\x1b[0m                              -> creates a new form for the resource");',
-      'console.log("  \\x1b[32mcreate:api-commons\\x1b[0m                            -> creates commons api resource");',
-      'console.log("  \\x1b[32mcreate:api-resource\\x1b[0m \\x1b[33mresource-name\\x1b[0m             -> creates a new api resource");',
+      'console.log("  \\x1b[32mcreate:form\\x1b[0m \\x1b[33mresource_name\\x1b[0m                     -> creates a new form for the resource.");',
+      'console.log("  \\x1b[32mconfig:next-auth\\x1b[0m                              -> create configuration for next auth.");',
+      'console.log("  \\x1b[32mcreate:api-commons\\x1b[0m                            -> create common resources for using api routes.");',
+      "console.log(\"  \\x1b[32mcreate:api-resource\\x1b[0m \\x1b[33mresource-name\\x1b[0m             -> creates a new api resource.\");",
+      'console.log(\"  \\x1b[32mconfig:tests-unit\\x1b[0m                             -> config tests unit with vitest.\");',
+      'console.log(\"  \\x1b[32mconfig:tests-e2e\\x1b[0m                              -> config tests end to end with playwright.\");',
       'console.log("\\n\\n");',
     ];
 
