@@ -67,7 +67,7 @@ export class NextResourceBuilder extends NextAccelerateBuilder implements IResou
 
     const deleteDir = path.join(detailDir, "delete");
     createDir(deleteDir);
-    createFile(path.join(deleteDir, "page.tsx"), deletePageTemplate(capitalize(this.singular)));
+    createFile(path.join(deleteDir, "page.tsx"), deletePageTemplate(capitalize(this.singular),capitalize(this.resource)));
 
     this.createCommit(`feat(${this.resource}): add all pages for detail view`);
 

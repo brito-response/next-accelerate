@@ -4,10 +4,11 @@ export const formCreateTemplate = (resourceInSingular: string, resourceInPlural:
   import { useForm, FormProvider } from 'react-hook-form';
   import { useRouter } from 'next/navigation';
   import { yupResolver } from '@hookform/resolvers/yup';
-  import { formSchema, FormSchemaType } from './formredef-scheme';
+  import { formSchema, FormSchemaType } from './form-scheme';
   import { InputCustom, InputRichTextEditor } from '@/components/Shared/Inputs';
   import { toast } from 'react-toastify';
   import { useEffect, useState } from 'react';
+  import { delay } from '@/utils/utils';
 
   export const FormNew${resourceInSingular} = () => {
     const router = useRouter();
@@ -19,17 +20,18 @@ export const formCreateTemplate = (resourceInSingular: string, resourceInPlural:
 
     const onSubmit = async (data: FormSchemaType) => {
       try {
-        const response = await fetch(\`\${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/posts\`, {
+        const response = await fetch(\`\${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/${resourceInPlural.toLocaleLowerCase()}\`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
-        const post = await response.json();
+        const ${resourceInSingular.toLocaleLowerCase()} = await response.json();
 
-        if (response.status === 201 && Boolean(post.postId) && photoFile) {
+        if (response.status === 201 && Boolean(${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLocaleLowerCase()}Id) && photoFile) {
           const formData = new FormData();
           formData.append("photo", photoFile, photoFile.name);
-
+          toast.success("encaminhando imagem ...");
+          await delay(3000);
           const uploadResp = await fetch(\`\${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/images/posts/\${post.postId}\`, { method: "POST", body: formData });
 
           if (uploadResp.ok) {

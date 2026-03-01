@@ -2,11 +2,8 @@ export const imageUploadTemplate = () => `
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-interface RouteContext { params: { resource: string, resourceId: string }; };
-
-export async function POST(req: NextRequest, context: RouteContext) {
-  const params = await context.params;
-  const { resource, resourceId } = params;
+export async function POST(req: NextRequest, context: { params: Promise<{ resource: string; resourceId: string }> }) {
+  const { resource, resourceId } = await context.params;
 
   try {
     const cookieStore = cookies();

@@ -2,10 +2,9 @@
 
 exports[`listPageTemplate should match snapshot 1`] = `
 "
-  // import { ActionButtonsBar } from "@/components/ActionButtonsBar";
   // import { Post } from "@/utils/models/posts";
-  import { FileCogIcon, FileText, TableConfigIcon } from "lucide-react";
   import Link from "next/link";
+  import { FileCogIcon, FileText } from "lucide-react";
 
   type Post = {};
   async function getposts(): Promise<Post[]> {
@@ -52,12 +51,15 @@ exports[`listPageTemplate should match snapshot 1`] = `
                       <Link href={\`/posts/\${post.postId}/config\`} className="cursor-pointer p-2 hover:bg-amber-400 rounded-2xl">
                         <FileCogIcon className="w-5 h-5" />
                       </Link>
-
                     </div>
 
                   </div>
                 </div>
-                // <ActionButtonsBar linkToEdit={\`/posts/\${post.postId}/edit\`} linkToDelete={\`/post/\${post.postId}/delete\`} />
+                <div className="flex items-center justify-around">
+                <Link href={\`/posts/\${post.postId}/edit\`} >editar</Link>
+                <Link href={\`/posts/\${post.postId}/delete\`} >excluir</Link>
+              </div>
+
               </article>
             ))}
           </section>

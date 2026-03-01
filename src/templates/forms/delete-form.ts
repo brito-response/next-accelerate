@@ -49,5 +49,4 @@ export const FormDeleteResource: React.FC<FormDeleteResourceProps> = ({ resource
     </form>
   );
 };
-
 `;

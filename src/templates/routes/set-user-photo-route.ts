@@ -1,27 +1,24 @@
 export const usersPhotoTemplate = () => `
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { decoderTokenToClaims } from "../../auth/decode-claims";
 
-interface RouteContext { params: { resource: string, resourceId: string }; };
-
-export async function POST(req: NextRequest, context: RouteContext) {
-  const params = await context.params;
-  const { resource, resourceId } = params;
-
+export async function POST(req: NextRequest) {
   try {
     const cookieStore = cookies();
     const token = (await cookieStore).get("jwt_back");
     const jwt = token?.value ?? "not found";
     const backendForm = new FormData();
+
     const formData = await req.formData();
     const photo = formData.get("photo");
 
     if (photo && photo instanceof Blob) {
-      backendForm.append("file", photo);
+      backendForm.append("photo", photo);
     } else {
       return NextResponse.json({ message: "Nenhuma foto enviada" }, { status: 400 });
     }
-
+    const user = decoderTokenToClaims(jwt);
     const init: RequestInit & { duplex?: 'half' } = {
       method: "PATCH",
       headers: {
@@ -31,7 +28,7 @@ export async function POST(req: NextRequest, context: RouteContext) {
       duplex: "half",
     };
 
-    const response = await fetch(\`\${process.env.NEXT_BACKEND_URL}/\${resource}/\${resourceId}/photo\`, init);
+    const response = await fetch(\`\${process.env.NEXT_BACKEND_URL}/users/\${user?.id}/photo\`, init);
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });
 
@@ -40,6 +37,4 @@ export async function POST(req: NextRequest, context: RouteContext) {
     return NextResponse.json({ message: "Erro ao conectar no backend" }, { status: 500 });
   }
 }
-
-
 `;

@@ -2,7 +2,7 @@ import path from "node:path";
 import { BuilderOptions } from "../utils/contracts/build-options";
 import { gitCommit } from "../utils/services/git.service";
 import { createDir, createFile, moveFile, pathExists } from "../utils/fs";
-import { environmentTemplate, formForgotTemplate, formLoginTemplate, formLoginWrapperTemplate, formRedefTemplate, formRegisterTemplate, formUpdateUserTemplate, managerContextTemplate, managerPageTemplate, nextConfigTemplate, nextDecodeClaimsTemplate, nextRequestApiTemplate, nextSessionTypeTemplate } from "../templates";
+import { environmentTemplate, formForgotTemplate, formLoginTemplate, formLoginWrapperTemplate, formRedefTemplate, formRegisterTemplate, formUpdateUserTemplate, managerContextTemplate, managerPageTemplate, nextConfigTemplate, nextDecodeClaimsTemplate, nextRequestApiTemplate, nextSessionTypeTemplate, utilsTypeTemplate } from "../templates";
 import { INextAuthBuilder } from "./interfaces/next-auth-builder.interface";
 import { formSchemeLoginTemplate, formSchemeRedefTemplate, formSchemeRegisterTemplate, formSchemeUpdateUserTemplate } from "../templates/forms/schems";
 import { hiddenPathsTemplate } from "../templates/config/hiddenpaths";
@@ -54,6 +54,9 @@ export class NextAuthBuilder implements INextAuthBuilder {
 
         if (!pathExists(this.basePath)) { throw new Error(`Failed to create directory at ${this.basePath}`); };
         createFile(path.join(this.basePath, "route.ts"), nextSessionTypeTemplate());
+
+        if (!pathExists(this.basePath)) { throw new Error(`Failed to create directory at ${this.basePath}`); };
+        createFile(path.join(this.basePath, "utils.ts"), utilsTypeTemplate());
 
         if (this.options?.git) this.createCommit("feat(next-auth): create aux options for login sessions.");
         return this;

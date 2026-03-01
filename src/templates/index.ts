@@ -13,6 +13,7 @@ export { nextConfigTemplate } from "./routes/nextauth-route";
 export { nextDecodeClaimsTemplate } from "./config/decode-claims";
 export { nextRequestApiTemplate } from "./config/request-api";
 export { nextSessionTypeTemplate } from "./config/session";
+export {utilsTypeTemplate} from "./config/utils";
 export { environmentTemplate } from "./config/environment";
 export { imageUploadTemplate } from "./routes/image-upload-route";
 export { deleteTemplate } from "./routes/delete-route";

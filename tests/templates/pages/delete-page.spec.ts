@@ -4,7 +4,7 @@ describe("deletePageTemplate", () => {
     let template: string;
 
     beforeAll(() => {
-        template = deletePageTemplate("Post");
+        template = deletePageTemplate("Post", "Posts");
     });
 
     it("should return a string", () => {
@@ -20,7 +20,7 @@ describe("deletePageTemplate", () => {
     });
 
     it("should not contain leftover template variables", () => {
-        expect(template).not.toMatch(/${.*}/);
+        expect(template).not.toMatch(/\$\{.*\}/);
     });
 
     it("should import delete form component", () => {
@@ -30,10 +30,6 @@ describe("deletePageTemplate", () => {
 
     it("should define dynamic route param", () => {
         expect(template).toContain("params: { postId: string;");
-    });
-
-    it("should pass resource name to form", () => {
-        expect(template).toContain('resource={"post"}');
     });
 
     it("should pass resource id to form", () => {

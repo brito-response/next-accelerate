@@ -6,6 +6,7 @@ import { ManagerLayout } from "@/components/Layouts/ManagerLayout";
 import { MenuAside } from "@/components/MenuAside";
 import { MenuProvider } from "@/contexts/manager-context";
 import { ToastContainer } from "react-toastify";
+import { Suspense } from "react";
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
@@ -15,9 +16,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <Header />
             <ToastContainer position="top-center" />
             <MenuAside />
+            <Suspense fallback={null}>
             <LayoutCaptureError>
               {children}
             </LayoutCaptureError>
+            </Suspense>
             <Footer />
           </ManagerLayout>
         </MenuProvider>

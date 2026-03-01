@@ -1,8 +1,7 @@
 export const listPageTemplate = (resourceInSingular: string, resourceInPlural: string) => `
-  // import { ActionButtonsBar } from "@/components/ActionButtonsBar";
   // import { ${resourceInSingular} } from "@/utils/models/${resourceInPlural.toLocaleLowerCase()}";
-  import { FileCogIcon, FileText, TableConfigIcon } from "lucide-react";
   import Link from "next/link";
+  import { FileCogIcon, FileText } from "lucide-react";
 
   type ${resourceInSingular} = {};
   async function get${resourceInPlural.toLocaleLowerCase()}(): Promise<${resourceInSingular}[]> {
@@ -27,9 +26,9 @@ export const listPageTemplate = (resourceInSingular: string, resourceInPlural: s
                 <FileText className="w-6 h-6" />
               </div>
               <div>
-                <h1 className="text-3xl font-semibold">Posts</h1>
+                <h1 className="text-3xl font-semibold">${resourceInPlural}</h1>
                 <p className="text-muted-foreground">
-                  Lista de posts publicados na aplicação
+                  Lista de ${resourceInPlural.toLocaleLowerCase()} publicados na aplicação
                 </p>
               </div>
             </div>
@@ -49,12 +48,15 @@ export const listPageTemplate = (resourceInSingular: string, resourceInPlural: s
                       <Link href={\`/${resourceInPlural.toLocaleLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLowerCase()}Id}/config\`} className="cursor-pointer p-2 hover:bg-amber-400 rounded-2xl">
                         <FileCogIcon className="w-5 h-5" />
                       </Link>
-
                     </div>
 
                   </div>
                 </div>
-                // <ActionButtonsBar linkToEdit={\`/${resourceInPlural.toLocaleLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLocaleLowerCase()}Id}/edit\`} linkToDelete={\`/${resourceInSingular.toLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLowerCase()}Id}/delete\`} />
+                <div className="flex items-center justify-around">
+                <Link href={\`/${resourceInPlural.toLocaleLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLocaleLowerCase()}Id}/edit\`} >editar</Link>
+                <Link href={\`/${resourceInPlural.toLocaleLowerCase()}/\${${resourceInSingular.toLocaleLowerCase()}.${resourceInSingular.toLocaleLowerCase()}Id}/delete\`} >excluir</Link>
+              </div>
+
               </article>
             ))}
           </section>

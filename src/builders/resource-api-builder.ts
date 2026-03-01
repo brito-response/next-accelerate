@@ -1,4 +1,5 @@
 import path from "node:path";
+import { capitalize } from "../utils/string";
 import { createDir, createFile, pathExists } from "../utils/fs";
 import { BuilderOptions } from "../utils/contracts/build-options";
 import { createResourceTemplate, deleteTemplate, imageUploadTemplate, updateResourceTemplate, usersCreateTemplate, usersPhotoTemplate, usersUpdateTemplate } from "../templates";
@@ -75,14 +76,14 @@ export class NextResourceApiBuilder extends NextAccelerateBuilder implements INe
         createDir(resourceBase);
 
         // CREATE
-        createFile(path.join(resourceBase, "route.ts"), createResourceTemplate());
+        createFile(path.join(resourceBase, "route.ts"), createResourceTemplate(capitalize(this.resource)));
 
         // UPDATE
         const paramFolder = `[${this.singular}Id]`;
         const updatePath = path.join(resourceBase, paramFolder);
 
         createDir(updatePath);
-        createFile(path.join(updatePath, "route.ts"), updateResourceTemplate());
+        createFile(path.join(updatePath, "route.ts"), updateResourceTemplate(capitalize(this.singular), capitalize(this.resource)));
 
         if (this.options?.git) this.createCommit(`feat(api/${this.resource}): add create and update routes`);
         return this;
