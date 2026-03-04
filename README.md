@@ -27,6 +27,124 @@ ex: npx create-next-app frontend
 
 - ❯   No, **_customize settings_**
 
+## folder structure 
+Simple and straightforward, for any new feature you intend to create, just follow the steps.
+> Create an assembler function in (commands), -> create a builder that will be used by the assembler in (builders) -> register its functionality in the switch, as an option (in src/index.ts -> main).
+
+> ⚠️ **Important**
+> Don't complicate things, this is an CLI, don't use decorators and the like, Node.js doesn't support them and this will generate errors. Remember: simplicity favors women, and in Node.js it's no different.
+
+```
+├── src
+│   ├── builders
+│   │   ├── core
+│   │   │   └── next-accelerate-builder.ts
+│   │   ├── interfaces
+│   │   │   ├── next-auth-builder.interface.ts
+│   │   │   ├── resource-api-builder.interface.ts
+│   │   │   ├── resource-builder.interface.ts
+│   │   │   ├── resource-form-builder.interface.ts
+│   │   │   ├── resource-install-builder.interface.ts
+│   │   │   └── tests-builder.interface.ts
+│   │   ├── next-auth-builder.ts
+│   │   ├── resource-api-builder.ts
+│   │   ├── resource-builder.ts
+│   │   ├── resource-form-builder.ts
+│   │   └── tests-builder.ts
+│   ├── commands
+│   │   ├── create-api-resource.ts
+│   │   ├── create-config-tests.ts
+│   │   ├── create-form-resource.ts
+│   │   ├── create-nextauth-resource.ts
+│   │   ├── create-resource.ts
+│   │   └── index.ts
+│   ├── index.ts
+│   ├── templates
+│   │   ├── components
+│   │   │   ├── button-comp.ts
+│   │   │   ├── footer-comp.ts
+│   │   │   ├── header-comp.ts
+│   │   │   ├── index.ts
+│   │   │   └── menu-aside-comp.ts
+│   │   ├── config
+│   │   │   ├── decode-claims.ts
+│   │   │   ├── environment.ts
+│   │   │   ├── hiddenpaths.ts
+│   │   │   ├── proxy.ts
+│   │   │   ├── request-api.ts
+│   │   │   ├── session.ts
+│   │   │   └── utils.ts
+│   │   ├── forms
+│   │   │   ├── create-form.ts
+│   │   │   ├── delete-form.ts
+│   │   │   ├── forgot-form.ts
+│   │   │   ├── login-form.ts
+│   │   │   ├── login-wrapper-form.ts
+│   │   │   ├── redef-form.ts
+│   │   │   ├── register-form.ts
+│   │   │   ├── schems
+│   │   │   │   ├── create-form-scheme.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── login-form-scheme.ts
+│   │   │   │   ├── redef-form-scheme.ts
+│   │   │   │   ├── register-form-scheme.ts
+│   │   │   │   ├── update-form-scheme.ts
+│   │   │   │   └── updateuser-form-scheme.ts
+│   │   │   ├── update-form.ts
+│   │   │   └── update-user-form.ts
+│   │   ├── index.ts
+│   │   ├── inputs
+│   │   │   └── input-template.ts
+│   │   ├── layouts
+│   │   │   ├── capture-error-layout.ts
+│   │   │   ├── index.ts
+│   │   │   ├── main-layout.ts
+│   │   │   ├── manager-layout-css.ts
+│   │   │   ├── manager-layout.ts
+│   │   │   ├── private-next-layout.ts
+│   │   │   ├── public-next-layout.ts
+│   │   │   └── root-next-layout.ts
+│   │   ├── pages
+│   │   │   ├── delete-page.ts
+│   │   │   ├── detail-page.ts
+│   │   │   ├── list-page.ts
+│   │   │   ├── manager-page.ts
+│   │   │   ├── new-page.ts
+│   │   │   └── update-page.ts
+│   │   ├── routes
+│   │   │   ├── create-resource-route.ts
+│   │   │   ├── delete-route.ts
+│   │   │   ├── image-upload-route.ts
+│   │   │   ├── manager-context.ts
+│   │   │   ├── nextauth-route.ts
+│   │   │   ├── set-user-photo-route.ts
+│   │   │   ├── update-resource-route.ts
+│   │   │   ├── user-create-route.ts
+│   │   │   └── user-update-route.ts
+│   │   └── tests
+│   │       ├── config-playwright.ts
+│   │       ├── config-vitest.ts
+│   │       └── index.ts
+│   └── utils
+│       ├── contracts
+│       │   └── build-options.ts
+│       ├── fs.ts
+│       ├── guards
+│       │   ├── dependency.guard.ts
+│       │   ├── index.ts
+│       │   └── next-verify.guard.ts
+│       ├── interceptors
+│       │   └── args.interceptor.ts
+│       ├── services
+│       │   ├── git.service.ts
+│       │   ├── install-dependences-form.service.ts
+│       │   ├── install-dependences.service.ts
+│       │   ├── install-nextauth-motion.service.ts
+│       │   ├── install-tests-e2e-dependences.service.ts
+│       │   └── install-tests-unit-dependences.service.ts
+│       └── string.ts
+```
+
 ## 📦 Installation
 
 You can run the CLI **without installing anything globally** using `npx`:
