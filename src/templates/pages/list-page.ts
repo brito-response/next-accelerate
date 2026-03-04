@@ -5,12 +5,16 @@ export const listPageTemplate = (resourceInSingular: string, resourceInPlural: s
 
   type ${resourceInSingular} = {};
   async function get${resourceInPlural.toLocaleLowerCase()}(): Promise<${resourceInSingular}[]> {
-    const response = await fetch(\`\${process.env.NEXT_BACKEND_URL}/${resourceInPlural.toLowerCase()}\`, {
-      cache: "no-store",
-    });
-    if (!response.ok) return [];
-    const ${resourceInPlural.toLocaleLowerCase()}: ${resourceInSingular}[] = await response.json();
-    return ${resourceInPlural.toLocaleLowerCase()};
+    try{
+      const response = await fetch(\`\${process.env.NEXT_BACKEND_URL}/${resourceInPlural.toLowerCase()}\`, {
+        cache: "no-store",
+      });
+      if (!response.ok) return [];
+      const ${resourceInPlural.toLocaleLowerCase()}: ${resourceInSingular}[] = await response.json();
+      return ${resourceInPlural.toLocaleLowerCase()};
+      }catch(erro){
+        return [];
+      }
   }
 
   export default async function ${resourceInPlural}Page() {

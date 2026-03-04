@@ -92,10 +92,5 @@ export const Header: React.FC = () => {
 };
 `;
 
-export const headerGenericTemplateUnitTest = () => `
-
-`;
-
-export const headerGenericTemplateE2ETest = () => `
-
-`;
+export const headerGenericTemplateUnitTest = (): string => {return (``);};
+export const headerGenericTemplateE2ETest = () => ``;

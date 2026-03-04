@@ -47,10 +47,5 @@ export const MenuAside: React.FC = () => {
   );
 };`;
 
-export const menuAsideGenericTemplateUnitTest = () => `
-
-`;
-
-export const menuAsideGenericTemplateE2ETest = () => `
-
-`;
+export const menuAsideGenericTemplateUnitTest = (): string => {return (``);};
+export const menuAsideGenericTemplateE2ETest = () => ``;

@@ -1,1 +1,1 @@
-export { nextConfigViTestTemplate } from "./config-vitest"
+export { nextConfigViTestTemplate } from "./config-vitest";

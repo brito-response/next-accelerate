@@ -1,5 +1,4 @@
-export const nextConfigViTestTemplate = () => `
-/// <reference types="vitest" />
+export const nextConfigViTestTemplate = () => `/// <reference types="vitest" />
 import { defineConfig } from "vitest/config";
 import path from "path";
 
