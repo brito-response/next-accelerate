@@ -11,11 +11,15 @@ export const inputTemplate = () => `
     pattern?: RegExp;
     placeholder?: string;
     asDate?: boolean;
+    mask?: "cpf" | "phone";
     multiline?: boolean;
-  }
+  };
 
-  export const InputCustom: React.FC<InputProps> = ({ name, label, type = "text", required, pattern, placeholder, asDate, ishidden, multiline = false }) => {
+  export const InputCustom: React.FC<InputProps> = ({ name, label, type = "text", required, pattern, placeholder, asDate, ishidden, mask,multiline = false }) => {
     const { control, formState: { errors } } = useFormContext();
+
+    const maskCPF = (value: string) => { return value.replace(/\\D/g, "").replace(/(\\d{3})(\\d)/, "$1.$2").replace(/(\\d{3})(\\d)/, "$1.$2").replace(/(\\d{3})(\\d{1,2})$/, "$1-$2"); };
+    const maskPhone = (value: string) => { return value.replace(/\\D/g, "").replace(/(\\d{2})(\\d)/, "($1) $2").replace(/(\\d{5})(\\d)/, "$1-$2"); };
 
     return (
       <div className="flex flex-col gap-2">
@@ -25,10 +29,7 @@ export const inputTemplate = () => `
           </label>
         )}
 
-        <Controller
-          control={control}
-          name={name}
-          rules={{
+        <Controller control={control} name={name} rules={{
             required: !ishidden && required ? "Campo obrigatório" : false,
             pattern: pattern ? { value: pattern, message: "Formato inválido" } : undefined,
           }}
@@ -45,18 +46,20 @@ export const inputTemplate = () => `
 
             return (
               <input {...field} id={name} type={type} placeholder={ishidden ? "" : placeholder} hidden={ishidden} aria-hidden={ishidden} value={value} onChange={(e) => {
-                  if (asDate) {
-                    const v = e.target.value;
-                    if (!v) {
-                      field.onChange(null);
-                      return;
-                    }
-                    const date = new Date(v);
-                    if (isNaN(date.getTime())) return;
+                  let value = e.target.value;
 
+                  if (mask === "cpf") { value = maskCPF(value); };
+                  if (mask === "phone") { value = maskPhone(value); };
+
+                  if (asDate) {
+                    if (!value) { field.onChange(null); return; };
+
+                    const date = new Date(value);
+                    if (isNaN(date.getTime())) return;
                     field.onChange(date.toISOString());
+
                   } else {
-                    field.onChange(e);
+                    field.onChange(value);
                   }
                 }}
                 className={\`\${baseClasses} \${errorClass} rounded-full\`}
@@ -64,11 +67,7 @@ export const inputTemplate = () => `
             );
           }}
         />
-        {errors[name]?.message && (
-          <p className="text-sm text-red-500">
-            {errors[name]?.message as string}
-          </p>
-        )}
+        {errors[name]?.message && (<p className="text-sm text-red-500">{errors[name]?.message as string}</p>)}
       </div>
     );
   };

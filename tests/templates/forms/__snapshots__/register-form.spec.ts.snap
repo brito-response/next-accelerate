@@ -19,12 +19,13 @@ export const FormRegister = () => {
     defaultValues: { name: "", email: "", cpf: "", dateOfBirth: new Date(), password: "", repeatPassword: "", phone: "", country: "", state: "", city: "", address: "" },
   });
 
+  const removeMask = (v: string) => v.replace(/\\D/g, "");
   const handlesubmitRegister = async (data: FormSchemaType) => {
     try {
       const response = await fetch(\`\${process.env.NEXT_PUBLIC_URL}/api/users\`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({...data, cpf: removeMask(data.cpf), phone: removeMask(data.phone)}),
       });
 
       if (response && response.status === 201) {

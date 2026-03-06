@@ -84,7 +84,7 @@ describe("formRegisterTemplate", () => {
 
     it("should send JSON body", () => {
         expect(template).toContain('"Content-Type": "application/json"');
-        expect(template).toContain("JSON.stringify(data)");
+        expect(template).toContain("JSON.stringify({...data, cpf: removeMask(data.cpf), phone: removeMask(data.phone)})");
     });
 
     it("should handle success response", () => {

@@ -8,12 +8,16 @@ exports[`listPageTemplate should match snapshot 1`] = `
 
   type Post = {};
   async function getposts(): Promise<Post[]> {
-    const response = await fetch(\`\${process.env.NEXT_BACKEND_URL}/posts\`, {
-      cache: "no-store",
-    });
-    if (!response.ok) return [];
-    const posts: Post[] = await response.json();
-    return posts;
+    try{
+      const response = await fetch(\`\${process.env.NEXT_BACKEND_URL}/posts\`, {
+        cache: "no-store",
+      });
+      if (!response.ok) return [];
+      const posts: Post[] = await response.json();
+      return posts;
+      }catch(erro){
+        return [];
+      }
   }
 
   export default async function PostsPage() {
