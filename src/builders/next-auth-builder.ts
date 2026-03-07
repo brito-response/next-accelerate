@@ -2,7 +2,7 @@ import path from "node:path";
 import { BuilderOptions } from "../utils/contracts/build-options";
 import { gitCommit } from "../utils/services/git.service";
 import { createDir, createFile, moveFile, pathExists } from "../utils/fs";
-import { environmentTemplate, formForgotTemplate, formLoginTemplate, formLoginWrapperTemplate, formRedefTemplate, formRegisterTemplate, formUpdateUserTemplate, managerContextTemplate, managerPageTemplate, nextConfigTemplate, nextDecodeClaimsTemplate, nextRequestApiTemplate, nextSessionTypeTemplate, utilsTypeTemplate } from "../templates";
+import { environmentTemplate, formForgotTemplate, formLoginTemplate, formLoginWrapperTemplate, formRedefTemplate, formRegisterTemplate, formUpdateUserTemplate, logoutTemplate, managerContextTemplate, managerPageTemplate, nextConfigTemplate, nextDecodeClaimsTemplate, nextRequestApiTemplate, nextSessionTypeTemplate, utilsTypeTemplate } from "../templates";
 import { INextAuthBuilder } from "./interfaces/next-auth-builder.interface";
 import { formSchemeLoginTemplate, formSchemeRedefTemplate, formSchemeRegisterTemplate, formSchemeUpdateUserTemplate } from "../templates/forms/schems";
 import { hiddenPathsTemplate } from "../templates/config/hiddenpaths";
@@ -38,8 +38,16 @@ export class NextAuthBuilder implements INextAuthBuilder {
         };
 
         createFile(path.join(this.basePath, "route.ts"), nextConfigTemplate());
-        if (this.options?.git) this.createCommit("feat(next-auth): create config route.");
 
+        const logoutPath = path.join(process.cwd(), "src/app/api/auth/logout");
+        createDir(logoutPath);
+
+        if (!pathExists(logoutPath)) {
+            console.error("\x1b[31m ✖ Erro \x1b[0m creating logout directory.");
+            process.exit(1);
+        }
+        createFile(path.join(logoutPath, "route.ts"), logoutTemplate());
+        if (this.options?.git) this.createCommit("feat(next-auth): create config route.");
         return this;
     }
 

@@ -4,13 +4,13 @@ import { decoderTokenToClaims } from "./app/api/auth/decode-claims";
 
 type Role = "ADMIN" | "AUTHOR" | "COMMENTATOR";
 
-const adminRoutes = ["/admin", "/users", "/dashboard/admin", "/settings", "/desk/view"];
-const authorRoutes = ["/desk/view"];
-const commntatorRoutes = ["/community", "/messages", "/", "/announced"];
+const adminRoutes = ["/manager","/admin", "/users", "/dashboard/admin", "/settings", "/desk/view"];
+const authorRoutes = ["/manager","/desk/view"];
+const commntatorRoutes = ["/manager","/community", "/messages", "/", "/announced"];
 
 export const config = {
     matcher: [
-        "/admin/:path*", "/users/:path*", "/settings", "/settings/:path*", "/desk/view", "/desk/view/:path*", "/messages", "/messages/:path*"
+        "/manager/:path*","/admin/:path*", "/users/:path*", "/settings", "/settings/:path*", "/desk/view", "/desk/view/:path*", "/messages", "/messages/:path*"
     ]
 };
 
@@ -35,7 +35,7 @@ export function proxy(request: NextRequest) {
 
     const token = request.cookies.get("jwt_back")?.value;
     if (!token) {
-        return NextResponse.redirect(new URL("/manager?error=not_has_token", request.url));
+        return NextResponse.redirect(new URL("/", request.url));
     }
 
     const claims = decoderTokenToClaims(token);

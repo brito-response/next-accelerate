@@ -53,6 +53,7 @@ export const FormLogin: React.FC = () => {
   };
 
   const handleLogout = async () => {
+    await fetch(\`\${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth/logout\`);
     await signOut({ callbackUrl: "/" });
   };
 
